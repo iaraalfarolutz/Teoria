@@ -105,8 +105,8 @@ public int compareTo(Imagen img1){
 		return -1;
 }
 
-public int[] getDistribucion(){
-	int[] vec = new int[256];
+public double[] getDistribucion(){
+	double[] vec = new double[256];
 	for ( int i=0 ; i< this.getAncho() ; i++ )
 		for ( int j =0; j< this.getAlto() ; j++)
 			vec[this.getColor(i, j)]++;
