@@ -39,7 +39,7 @@ public class TPE {
 			String[] s = i.getName().split("/");
 			System.out.println("La imagen "+ s[1] +" tiene un factor de correlacion  = "+ i.getFactor());
 		}
-		double[] dist = imgO.getDistribucion();
+		double[] dist = vimg.elementAt(6).getDistribucion();
 		double [] distImagenO = imgO.getPixeles();
 		double [] distImagen1 = vimg.elementAt(0).getPixeles();
 		double [] distImagen6 = vimg.elementAt(6).getPixeles();
@@ -54,8 +54,8 @@ public class TPE {
 		Huffman prueba = new Huffman(dist);
 		HashMap<Integer, Vector<String>> cod= prueba.getCodificacion();		
 		ManejoArchivo archivo = new ManejoArchivo("holis.txt");
-		String codificacion = prueba.getMensajeCodificado(distImagenO, cod);
-		archivo.EscribirArchivo(codificacion);
+		String codificacion = prueba.getMensajeCodificado(distImagen6, cod);
+		int cantidad = archivo.EscribirArchivo(codificacion);
 		System.out.println("TERMINO DE ESCRIBIR EN ARCHIVO"+System.currentTimeMillis());
 		String encabezado = imgO.generarEncabezado(dist);
 		
@@ -145,13 +145,15 @@ public class TPE {
         //prueba.setVechuff(distDecod);
        // byte[] line = archivo.LeerArchivo();
         
-        String mRecuperado = prueba.recuperarMensaje(codificacion);
+        String leido = archivo.LeerArchivo(cantidad);
+        
+        String mRecuperado = prueba.recuperarMensaje(leido);
         System.out.println("termino de decodificar"+System.currentTimeMillis());
         //System.out.println(mRecuperado);
        
-        int[] imagen = prueba.obtenerImagen(mRecuperado, imgO.getAncho(), imgO.getAlto(), prueba.getHuffmanTree());
-        BufferedImage img = map( imgO.getAncho(), imgO.getAlto(), imagen);
-        savePNG( img, "imagenes/ImagenDecodificada.bmp" );
+        int[] imagen = prueba.obtenerImagen(mRecuperado, vimg.elementAt(6).getAncho(), vimg.elementAt(6).getAlto(), prueba.getHuffmanTree());
+        BufferedImage img = map( vimg.elementAt(6).getAncho(), vimg.elementAt(6).getAlto(), imagen);
+        savePNG( img, "imagenes/ImagenDecodificada6.bmp" );
         
        //GUARDAR IMAGEN DECODIFICADA   
         System.out.println("FIN prog"+ System.currentTimeMillis()); 
