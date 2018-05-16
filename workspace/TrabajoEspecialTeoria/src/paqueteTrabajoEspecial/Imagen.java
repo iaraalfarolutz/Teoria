@@ -1,6 +1,7 @@
 package paqueteTrabajoEspecial;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
@@ -14,7 +15,7 @@ public class Imagen implements Comparable<Imagen> {
 	
 public Imagen(String name){	
 	try {
-			this.img = ImageIO.read(getClass().getResource(name));
+			this.img = ImageIO.read(new File(name));
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
 		}
@@ -27,7 +28,7 @@ this.name = name;
 
 public Imagen(String name, Imagen imgO){
 	try {
-		this.img = ImageIO.read(getClass().getResource(name));
+		this.img = ImageIO.read(new File(name));
 	} catch (IOException e) {
 		System.out.println(e.getMessage());
 	}
@@ -89,7 +90,7 @@ private double getFactorCorrelacion(Imagen img1){
 	return covarianza / desvios;
 }
 
-private double getMediaCruz(Imagen img1){
+public double getMediaCruz(Imagen img1){
 	double suma=0;
 	for(int i=0; i< this.getAncho();i++)
 		for(int j=0;j< this.getAlto();j++)
@@ -111,68 +112,26 @@ public double[] getDistribucion(){
 		for ( int j =0; j< this.getAlto() ; j++)
 			vec[this.getColor(i, j)]++;
 	return vec;
+	
 }
 
 
+public double[] getPixeles(){ //el arreglo gigante que le pasas al histograma (pide un arreglo el metodo)
+	double[] vec = new double[(this.getAlto())*this.getAncho()];
+	for ( int i=0 ; i< this.getAncho() ; i++ )
+		for ( int j =0; j< this.getAlto() ; j++)
+			vec[i*this.getAlto()+j]= this.getColor(i, j);
+	return vec;
 }
-//Clase
-//histograma cuento cuantos 50 tengo, cuantos 45... y armo.
-//no guardar el codificado a nivel string, guardar a nivel bit.
-//eliminar bits de un operando. And con una mascara(1 lo que uiqero que se quede, 0 lo que quiero que se vaya) o con or al reves. Sirve para averiguar el valor de un bit
-//en una posicion tambien(mask en 0 y 1s)
-//desplazamento 0011 <<2 -> 1100
-//1100 >>1 -> 011
-//PARA COMPRIMIR 
-// proceso cada simbolo
-//recupero codificacion del simbolo(como secuencia de bits)
-//empaquetAR bits en un char. haciendo corrimientos y usando operaciones lógicas-CHAR:8 bits (en java capaz 16)
-//en un char puedo guardar simbolos a nivel bits
-//cuando termino de guardar todo guardo en un archivo .txt o lo que sea. Si lo abro va a haber simbolos raros
 
-//En un vestor de string llamado mensajes meto los simbolos(String) en nuestro caso el valor del r
-//Tengo hash con string, valor del simbolo, y String[] con codificacion. Cargo hash
-//como resultado de generar toda la codificacion tengo UN string (secuencia de char)
-//GENERAR CODIF
-//resultado en vacio
-//char en 0 (buffer)
-//int cant digitos en 0
-//for string en mensaje
-//en String[] = hash.get.simbolo
-//for string en codigo ->bit
-//buffer = (char)(buffer << 1)
-//if bit = 1
-//	buffer = (char) (buffer |1)
-//cantdigitos++
-//if cantdigitos = 16 
-//rsultado +=uffer
-//cantdigitos=0
-//buffer=0;
+public String generarEncabezado(double[] dist){
+	int alto = this.getAlto();
+	int ancho = this.getAncho();
+	String aux1 = String.valueOf(alto)+","+String.valueOf(ancho)+'\n';
+	String aux2="";
+	for(int i = 0; i < dist.length; i++)
+		aux2+=String.valueOf(i)+","+String.valueOf(dist[i])+";";
+	return aux1+aux2+'\n';
+}
 
-//PARA HISTOGRAMA JFREECHART
-
-//termino de analizar todos los simbolos
-//Para que no quede basura al final
-//if cant_digitos<16 && cantdigitos!=0
-//buffer = (char) (buffer <<(16 - cant_digitos))
-//resultado+=buffer;
-//return resultado (afuera). Lo guardo en un archivo. Y despues tengo qu levantarlo y decod
-//CUANDO LEA TENGO QUE LEER HASTA CANTIDAD DE SIMBOLOS
-
-//DECODIFICAR
-// for(char c : resultado.tocharArry())
-//Codificacion.generarbits
-
-
-//GENERAR BITS
-//CHAR MASCARA = 1<<15
-/*for(int i=0; i<16;i++)
-		if(num&mascara==32768)
-			sysout 1
-		else
-				sysout 0
-		 num = (char) (num <<1 )*/
-
-//Puedo usar char o int o lo que quiera. ES mejor char
-
-//Despues tengo que generar imagen. Recupero decodificacion y recorro imagen y e este pixel pone este color
-//ENTREGAR archivo codificado.txt y la imagen decodificada(la imagen hay que levatarla del disco)
+}

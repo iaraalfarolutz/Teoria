@@ -1,9 +1,7 @@
 package paqueteTrabajoEspecial;
-
 import java.io.File;
 import java.io.IOException;
 import javax.swing.JPanel;
-
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.ChartUtilities;
@@ -17,31 +15,33 @@ import org.jfree.ui.ApplicationFrame;
 
 public class Histograma extends ApplicationFrame {
 
-static Imagen img;
+private static final long serialVersionUID = 1L;
 
-public Histograma(String title, Imagen img) {
+private static double[] dist;
+
+public Histograma(String title, double[] dist, String ruta, String titulo) {
 super(title);
-JPanel chartPanel = crearPanel();
+Histograma.dist = dist;
+JPanel chartPanel = crearPanel(Histograma.dist, ruta, titulo);
 chartPanel.setPreferredSize(new java.awt.Dimension(500, 475));
 setContentPane(chartPanel);
-Histograma.img = img;
 }
 
 private static IntervalXYDataset crearDataset(double[] dist) {
 HistogramDataset dataset = new HistogramDataset();
-for (int i = 0; i< dist.length ; i++)
+/*for (int i = 0; i< dist.length ; i++)
 	if (dist[i] !=0)
 	System.out.println("-distribucion del numero " + i+ ": "+ dist[i]);
-
-dataset.addSeries("Frecuencias", dist , 15);
+*/
+dataset.addSeries("Frecuencias", dist , 16);
 return dataset;
 }
 
-private static JFreeChart crearChart(IntervalXYDataset dataset) {
+private static JFreeChart crearChart(IntervalXYDataset dataset, String ruta, String titulo) {
 	JFreeChart chart = ChartFactory.createHistogram(
-		"Histograma",
-		null,
-		null,
+		titulo,
+		"Tono de gris",
+		"Frecuencia",
 		dataset,
 		PlotOrientation.VERTICAL,
 		true,
@@ -52,7 +52,7 @@ private static JFreeChart crearChart(IntervalXYDataset dataset) {
 	XYBarRenderer renderer = (XYBarRenderer) plot.getRenderer();
 	renderer.setDrawBarOutline(false);
 		try{
-		ChartUtilities.saveChartAsJPEG(new File("C:\\Users\\Iara\\Desktop\\histograma.jpg"), chart, 500, 475);
+		ChartUtilities.saveChartAsJPEG(new File(ruta), chart, 500, 475);//SACAR
 		}
 		catch(IOException e){
 		System.out.println("Error al abrir el archivo");
@@ -60,11 +60,9 @@ private static JFreeChart crearChart(IntervalXYDataset dataset) {
 	return chart;
 }
 
-public static JPanel crearPanel() {
-	System.out.println("+++++++++++++++++++++");
-	double[] dist = Histograma.img.getDistribucion();
+public static JPanel crearPanel(double[] dist, String ruta, String titulo) {
 	//System.out.println("+++++++++++++++++++++");
-	JFreeChart chart = crearChart(crearDataset(dist));
+	JFreeChart chart = crearChart(crearDataset(dist), ruta, titulo);
 		return new ChartPanel(chart);
 }
 }
