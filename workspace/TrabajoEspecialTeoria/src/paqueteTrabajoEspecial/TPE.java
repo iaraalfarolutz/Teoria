@@ -45,20 +45,12 @@ public class TPE {
 		double [] distImagen6 = vimg.elementAt(6).getPixeles();
 		
 		Histograma histo = new Histograma("Histograma", distImagenO, "Histograma_Original.jpg", "Imagen Original");
-		histo.pack();
-		RefineryUtilities.centerFrameOnScreen(histo);
+		//histo.pack();
+		//RefineryUtilities.centerFrameOnScreen(histo);
 		//histo.setVisible(true);
 		
 		Histograma histParecido = new Histograma("Histograma", distImagen1, "Histograma_Parecido.jpg", "Imagen mas similar");
-		histParecido.pack();
-		RefineryUtilities.centerFrameOnScreen(histParecido);
-		//histParecido.setVisible(true);
-		
-		Histograma histMenosParecido = new Histograma("Histograma", distImagen6, "Histograma_Menos_Parecido.jpg", "Imagen menos similar");
-		histMenosParecido.pack();
-		RefineryUtilities.centerFrameOnScreen(histMenosParecido);
-		//histMenosParecido.setVisible(true);
-		
+		Histograma histMenosParecido = new Histograma("Histograma", distImagen6, "Histograma_Menos_Parecido.jpg", "Imagen menos similar");		
 		Huffman prueba = new Huffman(dist);
 		HashMap<Integer, Vector<String>> cod= prueba.getCodificacion();		
 		ManejoArchivo archivo = new ManejoArchivo("holis.txt");
@@ -163,7 +155,7 @@ public class TPE {
         
        //GUARDAR IMAGEN DECODIFICADA   
         System.out.println("FIN prog"+ System.currentTimeMillis()); 
-        System.exit(0);
+       // System.exit(0);
 }
 	
 	 private static BufferedImage map( int sizeX, int sizeY , int[] imagen){

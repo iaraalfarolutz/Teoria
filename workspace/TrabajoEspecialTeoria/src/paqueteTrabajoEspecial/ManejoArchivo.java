@@ -23,6 +23,9 @@ public ManejoArchivo(String name){
 	
 public void EscribirArchivo(String codificacion){
 	try {
+		
+		//FileOutputStream fw = new FileOutputStream(nombre);
+		//ObjectOutputStream bw = new ObjectOutputStream(fw);
 	     FileOutputStream fos = new FileOutputStream(name);
 	     Writer out = new OutputStreamWriter(fos, "UTF8");
     	 out.write(codificacion);
