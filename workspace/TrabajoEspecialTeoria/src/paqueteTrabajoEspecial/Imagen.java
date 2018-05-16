@@ -77,7 +77,7 @@ public double getDesvio(double media)
 			{
 			 suma+= Math.pow((this.getColor(i,j)-media), 2);
 			}
-	suma= suma/(this.getAlto()*this.getAncho()-1); /// la formula esta bien ?
+	suma= suma/(this.getAlto()*this.getAncho()-1);
 	double resultado = (float) Math.sqrt(suma);
 	return resultado;
 }

@@ -173,31 +173,5 @@ public int getAncho(String dimensiones){
 }
 
 
-/*public Vector<Byte> getMensajeCodificado(double[] mensaje, HashMap<Integer, Vector<String>> cod){ //imrpimimos en el archivo aca
-	byte buffer =0;
-	int digitos=0;
-	Vector<Byte >resultado= new Vector<Byte>();
-	for (int i = 0; i < mensaje.length ; i++){
-		Vector<String> codigo = cod.get((int)mensaje[i]);
-		for(String bit : codigo){
-			buffer = (byte) (buffer << 1) ;
-			if(bit =="1")
-				buffer= (byte) (buffer | 1);
-			digitos++;
-			if(digitos ==8){
-				//System.out.println(buffer);
-				resultado.addElement(buffer);
-				buffer = 0;
-				digitos=0;
-			}
-		}
-	}
-	if((digitos<8) && (digitos!=0)){
-		buffer = (byte) (buffer << (8-digitos));
-		resultado.addElement(buffer);
-	}
-	return resultado;//guardarlo en una variable y comprobar con el decodificacion
-}
-*/
 
 

@@ -29,10 +29,6 @@ setContentPane(chartPanel);
 
 private static IntervalXYDataset crearDataset(double[] dist) {
 HistogramDataset dataset = new HistogramDataset();
-/*for (int i = 0; i< dist.length ; i++)
-	if (dist[i] !=0)
-	System.out.println("-distribucion del numero " + i+ ": "+ dist[i]);
-*/
 dataset.addSeries("Frecuencias", dist , 16);
 return dataset;
 }
@@ -61,7 +57,6 @@ private static JFreeChart crearChart(IntervalXYDataset dataset, String ruta, Str
 }
 
 public static JPanel crearPanel(double[] dist, String ruta, String titulo) {
-	//System.out.println("+++++++++++++++++++++");
 	JFreeChart chart = crearChart(crearDataset(dist), ruta, titulo);
 		return new ChartPanel(chart);
 }
